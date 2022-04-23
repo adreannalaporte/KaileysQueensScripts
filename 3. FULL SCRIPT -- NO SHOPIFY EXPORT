@@ -3,7 +3,6 @@ import pandas as pd
 ############################################################################################################
 # CREATING AND ORGANIZING THE DATAFRAME BELOW :
 ############################################################################################################
-
 pd.set_option('display.width', None)
 pd.set_option('display.max_rows', None)
 loop1 = 0
@@ -17,7 +16,7 @@ while loop1 == 0:
         print('Please enter a valid file path. Make sure your formatting is correct (follow sample file path given '
               'above):')
 data = pd.read_csv(file_path)
-
+df_participants = data
 # sorting by age and then by preference
 df_participants = df_participants.sort_values('Age')
 df_participants = df_participants.sort_values('Preference', ascending=False)
@@ -171,8 +170,21 @@ else:
                         df_participants.iloc[counter, 0] = x + modulus + 1
                         counter += 1
 
-# final product before exporting to csv
+# final product printed before exporting to csv
+print('\n\n~~~~~Here is what will be in your CSV export:~~~~~\n\n')
 print(df_participants)
 
+
+# asking Kailey to enter file path destination
+loop1 = 0
+export_file_path = input('Please enter the file path of where you want the output CSV to be stored.\n'
+                         'File path: ')
+while loop1 == 0:
+    if isinstance(export_file_path, str) and '/' in export_file_path and '.csv' in export_file_path:
+        loop1 = 1
+    else:
+        print('\n\nPlease enter a valid file path. Make sure your formatting is correct (follow sample file path given '
+              'above):')
+
 # exporting to csv!!
-df_participants.to_csv('/Users/adreannalaporte/Desktop/ISE 495b/OUTPUT W PREFERENCE AND AGE', index=False)
+df_participants.to_csv(export_file_path, index=False)
