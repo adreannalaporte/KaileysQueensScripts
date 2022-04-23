@@ -15,7 +15,10 @@ while loop1 == 0:
     else:
         print('Please enter a valid file path. Make sure your formatting is correct (follow sample file path given '
               'above):')
+        file_path = input('File path: ')
+        loop1 = 0
 data = pd.read_csv(file_path)
+
 df_participants = data
 # sorting by age and then by preference
 df_participants = df_participants.sort_values('Age')
@@ -174,17 +177,17 @@ else:
 print('\n\n~~~~~Here is what will be in your CSV export:~~~~~\n\n')
 print(df_participants)
 
-
 # asking Kailey to enter file path destination
-loop1 = 0
-export_file_path = input('Please enter the file path of where you want the output CSV to be stored.\n'
+loop2 = 0
+export_file_path = input('\n\nPlease enter the file path of where you want the output CSV to be stored.\n'
                          'File path: ')
-while loop1 == 0:
+while loop2 == 0:
     if isinstance(export_file_path, str) and '/' in export_file_path and '.csv' in export_file_path:
-        loop1 = 1
+        loop2 = 1
     else:
-        print('\n\nPlease enter a valid file path. Make sure your formatting is correct (follow sample file path given '
-              'above):')
+        print('\n\nPlease enter a valid file path.')
+        export_file_path = input('File path: ')
+        loop2 = 0
 
 # exporting to csv!!
 df_participants.to_csv(export_file_path, index=False)
