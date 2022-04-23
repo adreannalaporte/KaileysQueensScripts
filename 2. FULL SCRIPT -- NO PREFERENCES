@@ -7,7 +7,18 @@ import math
 ############################################################################################################
 pd.set_option('display.width', None)
 pd.set_option('display.max_rows', None)
-file_path = '/Users/adreannalaporte/Desktop/ISE 495B/data export mult events & prefs.csv'
+loop1 = 0
+file_path = input('Please enter the file path for the Shopify Export Data.\n'
+                  'Sample file path: /Users/adreannalaporte/Desktop/ISE 495B/data export mult events & prefs.csv\n'
+                  'File path: ')
+while loop1 == 0:
+    if isinstance(file_path, str) and '/' in file_path and '.csv' in file_path:
+        loop1 = 1
+    else:
+        print('Please enter a valid file path. Make sure your formatting is correct (follow sample file path given '
+              'above):')
+        file_path = input('File path: ')
+        loop1 = 0
 data = pd.read_csv(file_path)
 
 # removing blank spaces in order number column
@@ -112,7 +123,7 @@ while loop == 0:
 
         # sorting by age and then by preference
         df_participants = df_participants.sort_values('Age')
-        print(df_participants)
+
         # removing unnecessary columns from the data frame
         del df_participants['Order Number']
         del df_participants['Products']
@@ -123,7 +134,7 @@ while loop == 0:
         # reindexing the columns after sorting them
         df_participants = df_participants.reindex(columns=['Breakout Room', 'E-Mail', 'Age'])
         df_participants = df_participants.reset_index(drop=True)
-        print(df_participants)
+
         ############################################################################################################
         # BREAKOUT ROOMS CREATED BELOW:
         ############################################################################################################
@@ -218,9 +229,23 @@ while loop == 0:
                                 df_participants.iloc[counter, 0] = x + modulus + 1
                                 counter += 1
 
-        # final product before exporting to csv
+        # final product printed before exporting to csv
+        print('\n\n~~~~~Here is what will be in your CSV export:~~~~~\n\n')
         print(df_participants)
 
+        # asking Kailey to enter file path destination
+        loop2 = 0
+        export_file_path = input('Please enter the file path of where you want the output CSV to be stored.\n'
+                                 'File path: ')
+        while loop2 == 0:
+            if isinstance(export_file_path, str) and '/' in export_file_path and '.csv' in export_file_path:
+                loop2 = 1
+            else:
+                print('\n\nPlease enter a valid file path.')
+                export_file_path = input('File path: ')
+                loop2 = 0
+
         # exporting to csv!!
-        df_participants.to_csv('/Users/adreannalaporte/Desktop/ISE 495b/OUTPUT W AGE & NO PREFS', index=False)
+        df_participants.to_csv(export_file_path, index=False)
+
         loop = 1
